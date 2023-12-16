@@ -1,2 +1,2 @@
 # HOMEDECO
-Mobilya satış uygulaması (user app)
+Mobilya satış uygulaması (admin app)
