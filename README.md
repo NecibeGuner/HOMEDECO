@@ -1,6 +1,6 @@
-# HOMEDECO Admin Panel
+# HOMEDECO Mobil Uygulaması
 
-Bu depo, Kocaeli Üniversitesi Bilişim Sistemleri Mühendisliği öğrencileri tarafından geliştirilen **HOMEDECO Mobilya Satış Uygulaması**nın yönetici (admin) paneli kodlarını içermektedir.
+Bu depo, Kocaeli Üniversitesi Bilişim Sistemleri Mühendisliği öğrencileri tarafından geliştirilen **HOMEDECO Mobilya Satış Uygulaması**nın Android tabanlı yönetici (admin) paneli kodlarını içermektedir. Uygulama geliştirme sürecinde **Kotlin**, **Android Studio** ve **Firebase** teknolojileri kullanılmıştır.
 
 ## Yazar
 
@@ -8,24 +8,26 @@ Bu depo, Kocaeli Üniversitesi Bilişim Sistemleri Mühendisliği öğrencileri 
 
 ## Proje Hakkında
 
-HOMEDECO, kullanıcılara çevrimiçi mobilya satışı yapma imkânı sunan bir e‑ticaret platformudur. Bu repoda, satış platformunun arka planda çalışacak **yönetici paneli** (admin dashboard) uygulaması bulunmaktadır. Admin paneli üzerinden:
+HOMEDECO Mobil Uygulaması, yöneticilerin mobil cihaz üzerinden ürün ve kategori yönetimini, sipariş takibini ve kullanıcı yetkilendirmesini gerçekleştirebilecekleri bir Android uygulamasıdır. Firebase altyapısı ile gerçek zamanlı veri akışı, kimlik doğrulama ve medya dosya yönetimi sağlanmıştır.
 
-* Ürün ve kategori yönetimi (oluşturma, güncelleme, silme)
-* Sipariş listesi ve durumu takibi
-* Kullanıcı hesaplarının görüntülenmesi ve yetkilendirme
-* Site içerik (banner, kampanya duyuruları) yönetimi
-* Raporlama ve istatistik panelleri
+### Temel Özellikler
 
-gibi temel işlevler gerçekleştirilebilir.
+* Ürün ve kategori ekleme, düzenleme ve silme
+* Gelen siparişlerin listelenmesi ve durum güncellemeleri
+* Kullanıcı hesapları için yetkilendirme ve profil yönetimi
+* Firebase Firestore üzerinden gerçek zamanlı veri senkronizasyonu
+* Firebase Authentication ile güvenli kullanıcı girişi
+* Firebase Cloud Storage ile ürün görsellerinin depolanması
 
 ## Teknoloji Yığını
 
-* Python 3.13
-* Django 5.2
-* PostgreSQL (veritabanı)
-* HTML5, CSS3, Bootstrap 5
-* JavaScript (jQuery)
-* AWS S3 / Django Storages (opsiyonel, medya dosyaları için)
+* Kotlin (Android uygulama dili)
+* Android Studio (IDE)
+* Firebase Auth (kimlik doğrulama)
+* Firebase Firestore (veritabanı)
+* Firebase Cloud Storage (medya dosyaları)
+* Google Play Services
+* Material Components for Android
 
 ## Kurulum
 
@@ -35,67 +37,51 @@ gibi temel işlevler gerçekleştirilebilir.
    git clone https://github.com/NecibeGuner/HOMEDECO.git
    cd HOMEDECO
    ```
-2. Sanal ortam oluşturun ve aktif edin:
+2. Android Studio ile projeyi açın:
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Windows: venv\Scripts\activate
-   ```
-3. Gereksinimleri yükleyin:
+   * **Open an existing Android Studio project** seçeneği ile proje klasörünü seçin.
+3. Firebase yapılandırma dosyasını ekleyin:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Veritabanı ayarlarını yapılandırın:
+   * Firebase Console üzerinden Android uygulama ekleyin.
+   * İndirdiğiniz `google-services.json` dosyasını `app/` klasörüne yerleştirin.
+4. Gradle projeyi senkronize edin:
 
-   * `.env` dosyası oluşturun ve gerekli ortam değişkenlerini ekleyin (`SECRET_KEY`, `DEBUG`, `DATABASE_URL`, AWS bilgileri vb.).
-5. Migration işlemlerini çalıştırın:
+   * Android Studio içinde **Sync Project with Gradle Files** butonuna tıklayın.
+5. Uygulamayı çalıştırın:
 
-   ```bash
-   python manage.py migrate
-   ```
-6. Yönetici kullanıcısı oluşturun:
-
-   ```bash
-   python manage.py createsuperuser
-   ```
-7. Geliştirme sunucusunu başlatın:
-
-   ```bash
-   python manage.py runserver
-   ```
-
-## Kullanım
-
-Tarayıcınızda `http://127.0.0.1:8000/admin/` adresine giderek oluşturduğunuz yönetici hesabıyla giriş yapabilirsiniz. Admin paneli üzerinde ürün, sipariş ve kullanıcı kayıtlarını yönetebilirsiniz.
+   * Emulator veya USB ile bağlı cihazı seçip **Run** butonuna basın.
 
 ## Proje Yapısı
 
 ```
 HOMEDECO/
-├── home_deco/            # Django ana proje dizini (settings, urls)
-├── apps/                 # Uygulama (app) modülleri
-│   ├── products/         # Ürün yönetimi
-│   ├── orders/           # Sipariş yönetimi
-│   └── users/            # Kullanıcı yönetimi ve yetkilendirme
-├── media/                # Yüklenen medya dosyaları
-├── static/               # Statik dosyalar (CSS, JS, img)
-├── templates/            # Şablon dosyaları
-├── requirements.txt      # Python paketleri
-└── README.md             # Proje dokümantasyonu
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/homedeco/admin/   # Kotlin kaynak kodları
+│   │   │   ├── res/                        # XML layout, drawable, values
+│   │   │   └── AndroidManifest.xml        # Uygulama tanımı
+│   └── build.gradle                       # Modül yapılandırması
+├── build.gradle                           # Proje yapılandırması
+├── settings.gradle
+├── google-services.json                   # Firebase yapılandırma dosyası
+└── README.md                              # Proje dokümantasyonu
 ```
 
-## Katkıda Bulunma
+## Kullanım
 
-Akademik proje düzenlemeleri ve hatırlatmalar için Fork yapıp, branch oluşturduktan sonra Pull Request gönderebilirsiniz.
+* Uygulamayı açtığınızda Firebase Authentication ekranı ile giriş yapabilirsiniz.
+* Ana ekranda ürün listesi ve siparişler sekmeleri bulunmaktadır.
+* Yeni ürün ya da kategori eklemek için sağ alt köşedeki **+** butonuna tıklayın.
+* Sipariş detaylarına girerek durum güncellemesi yapabilirsiniz.
+* Ayarlar menüsünden kullanıcı profili ve çıkış işlemi gerçekleştirilebilir.
 
 ## Lisans
 
-Bu proje, akademik amaçlı geliştirilmiştir ve ticari bir lisansa tabi değildir.
+Bu proje akademik amaçlı geliştirilmiştir ve ticari bir lisansa tabi değildir.
 
 ## İletişim
 
 Her türlü soru ve geri bildirim için lütfen e-posta yoluyla ulaşın:
 
 * Necibe GÜNER – [221307049@kocaeli.edu.tr](mailto:221307049@kocaeli.edu.tr)
-
